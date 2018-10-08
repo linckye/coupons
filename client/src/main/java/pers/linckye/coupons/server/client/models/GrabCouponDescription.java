@@ -10,7 +10,4 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class GrabCouponDescription {
 
-    /** 备注. **/
-    private String marks;
-
 }
