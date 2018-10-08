@@ -10,6 +10,7 @@ import pers.linckye.coupons.server.manager.models.GrabCoupon;
  */
 @Component
 public class GrabCouponConverter extends Converter<GrabCouponDescription, GrabCoupon> {
+
     @Override
     protected GrabCoupon doForward(GrabCouponDescription grabCouponDescription) {
         throw new UnsupportedOperationException();
@@ -17,6 +18,8 @@ public class GrabCouponConverter extends Converter<GrabCouponDescription, GrabCo
 
     @Override
     protected GrabCouponDescription doBackward(GrabCoupon grabCoupon) {
-        return new GrabCouponDescription();
+        return new GrabCouponDescription()
+                .setSuccess(grabCoupon.getSuccess());
     }
+
 }

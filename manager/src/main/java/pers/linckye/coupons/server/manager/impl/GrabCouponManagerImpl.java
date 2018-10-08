@@ -14,7 +14,7 @@ public class GrabCouponManagerImpl
 
     @Override
     public GrabCoupon grab(GrabCouponArg grabCouponArg) {
-        return null;
+        return new GrabCoupon().setSuccess(true);
     }
 
 }

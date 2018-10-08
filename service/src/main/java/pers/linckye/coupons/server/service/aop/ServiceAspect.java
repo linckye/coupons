@@ -1,4 +1,4 @@
-package pers.linckye.coupons.server.service.aspects;
+package pers.linckye.coupons.server.service.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,6 +11,8 @@ import pers.linckye.coupons.server.client.models.Response;
 import static pers.linckye.coupons.server.common.utils.Blank.containsNullOrNoneElements;
 
 /**
+ * Service 切面.
+ *
  * @author linckye 2018-08-15
  */
 @Aspect
@@ -21,9 +23,10 @@ public class ServiceAspect {
     @Pointcut("execution(* pers.linckye.coupons.server.service.*Service*.*(..))")
     private void serverPointCut() {}
 
+    /** Service 统一异常处理. **/
     @Around("ServiceAspect.serverPointCut()")
     @SuppressWarnings("unchecked")
-    public Object handlerMethod(ProceedingJoinPoint proceedingJoinPoint) throws Exception {
+    public Object handleErrors(ProceedingJoinPoint proceedingJoinPoint) throws Exception {
         // check args
         if (containsNullOrNoneElements(proceedingJoinPoint.getArgs()))
             return ((Class<? extends Response>) ((MethodSignature) proceedingJoinPoint.getSignature()).getReturnType())

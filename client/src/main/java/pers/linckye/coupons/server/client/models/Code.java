@@ -2,6 +2,8 @@ package pers.linckye.coupons.server.client.models;
 
 import lombok.Getter;
 
+import java.util.Optional;
+
 import static pers.linckye.coupons.server.common.utils.Blank.*;
 
 /**
@@ -32,12 +34,12 @@ public enum Code {
         this.value = value;
     }
 
-    public static Code fromValue(Integer value) {
+    public static Optional<Code> from(Integer value) {
         if (isNull(value)) throw new IllegalArgumentException("Code is required");
         for (Code code : values()) {
-            if (code.getValue().equals(value)) return code;
+            if (code.getValue().equals(value)) return Optional.of(code);
         }
-        throw new IllegalArgumentException("Unsupport code for [" + value + "]");
+        return Optional.empty();
     }
 
 }

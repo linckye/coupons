@@ -43,18 +43,17 @@ public class GrabCouponServiceImpl
         if (isNull(couponTypeString)) new Response<AddGrabCouponResponse>()
                 .setCode(ILLEGAL_ARGUMENT.getValue())
                 .setMessage("Coupon type is required");
-        CouponType couponType = fromNullableValue(couponTypeString);
-        if (isNull(couponType)) return new Response<AddGrabCouponResponse>()
+        Optional<CouponType> couponTypeOptional = from(couponTypeString);
+        if (!couponTypeOptional.isPresent()) return new Response<AddGrabCouponResponse>()
                 .setCode(ILLEGAL_ARGUMENT.getValue())
                 .setMessage("Unsupport coupon type for [" + couponTypeString + "]");
 
-        GrabCoupon grabCoupon = grabCouponManager.grab(new GrabCouponArg().setCouponType(couponType));
+        GrabCoupon grabCoupon = grabCouponManager.grab(new GrabCouponArg().setCouponType(couponTypeOptional.get()));
 
         return Response.<AddGrabCouponResponse>success()
                 .setData(new AddGrabCouponResponse().setGrabCouponDescription(
                         grabCouponConverter.reverse().convert(grabCoupon))
                 );
-
     }
 
 }

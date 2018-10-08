@@ -2,6 +2,8 @@ package pers.linckye.coupons.server.manager.models;
 
 import lombok.Getter;
 
+import java.util.Optional;
+
 import static pers.linckye.coupons.server.common.utils.Blank.isNull;
 import static pers.linckye.coupons.server.common.utils.Blank.isNullOrEmpty;
 
@@ -24,18 +26,12 @@ public enum CouponType {
         this.value = value;
     }
 
-    public static CouponType fromValue(String value) {
-        CouponType couponType = fromNullableValue(value);
-        if (!isNull(couponType)) return couponType;
-        throw new IllegalArgumentException("Unsupport coupon type for [" + value + "]");
-    }
-
-    public static CouponType fromNullableValue(String value) {
+    public static Optional<CouponType> from(String value) {
         if (isNullOrEmpty(value)) throw new IllegalArgumentException("Code is required");
         for (CouponType couponType : values()) {
-            if (couponType.getValue().equals(value)) return couponType;
+            if (couponType.getValue().equals(value)) return Optional.of(couponType);
         }
-        return null;
+        return Optional.empty();
     }
 
 }
